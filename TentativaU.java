@@ -31,53 +31,48 @@ public class Cultura2 {
         }
 
         while(parar == false){
-			
-			System.out.println("while loop, dia: " + dias);
-
             int y = 0;
-			
-			String[][] novaCultura = cultura;
+            
+            String[][] novaCultura = new String[linhas][colunas];
+            for ( int i = 0; i < novaCultura.length; i++ ) {
+                System.arraycopy(cultura[i], 0, novaCultura[i], 0, cultura[i].length);
+            }
 			
             for(int i = 0; i < linhas ; i++) {
-				System.out.println(" for loop, i: " + i + ", y: " + y);
-				
-				System.out.println(cultura[y][i]);
 
                 if(cultura[y][i].equals("*")) {
-					System.out.println("Asterisco!");
                     if(y != 0) {
                         if(cultura[y - 1][i].equals("M")) {
-							System.out.println("M encontrado!");
                             marcadoresInfetados = marcadoresInfetados + 1;
+                            cultura[y - 1][i] = "n";
                         }
                         novaCultura[y - 1][i] = "*";
                     }
                     if(y != linhas - 1) {
                         if(cultura[y + 1][i].equals("M")) {
                             marcadoresInfetados = marcadoresInfetados + 1;
-							System.out.println("M encontrado!");
+                            cultura[y + 1][i] = "n";
                         }
                         novaCultura[y + 1][i] = "*";
                     }
                     if(i != 0) {
                         if(cultura[y][i - 1].equals("M")) {
                             marcadoresInfetados = marcadoresInfetados + 1;
-							System.out.println("M encontrado!");
+                            cultura[y][i - 1] = "n";
                         }
                         novaCultura[y][i - 1] = "*";
                     }
                     if(i != colunas - 1) {
                         if(cultura[y][i + 1].equals("M")) {
                             marcadoresInfetados = marcadoresInfetados + 1;
-							System.out.println("M encontrado!");
+                            cultura[y][i + 1] = "n";
                         }
                         novaCultura[y][i + 1] = "*";
                     }
                 }
 
-                if(marcadoresInfetados == 1 && dias1 != 0) {
+                if(marcadoresInfetados >= 1 && dias1 == 0) {
                     dias1 = dias;
-					System.out.println("Primeiro M!");
                 }
 
                 if(marcadoresInfetados == numeroMarcadores) {
@@ -86,15 +81,15 @@ public class Cultura2 {
                     break;
                 }
 
-                if(i == colunas - 1 && y != linhas) {
-					y = y + 1;
-					i = -1;
+                if(i == colunas - 1 && y != linhas - 1) {
+                    y = y + 1;
+                    i = -1;
                 }
             }
 			
-			cultura = novaCultura;
+            cultura = novaCultura;
 
-			dias = dias + 1;
+            dias = dias + 1;
         }
 
         System.out.println(dias1 + " " + dias2);
